@@ -110,14 +110,16 @@ const { App } = Plugins;
             kc.authenticated = false;
 
             callbackStorage = createCallbackStorage();
-            var adapters = ['default', 'cordova', 'cordova-native'];
+            var adapters = ['default', 'cordova', 'cordova-native', 'capacitor', 'capacitor-native'];
 
             if (initOptions && adapters.indexOf(initOptions.adapter) > -1) {
                 adapter = loadAdapter(initOptions.adapter);
             } else if (initOptions && typeof initOptions.adapter === "object") {
                 adapter = initOptions.adapter;
             } else {
-                if (window.Cordova || window.cordova) {
+                if (window.Capacitor || window.capacitor) {
+                    adapter = loadAdapter('capacitor');
+                }else if (window.Cordova || window.cordova) {
                     adapter = loadAdapter('cordova');
                 } else {
                     adapter = loadAdapter();
